@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+
+<style>
+.well{
+  width: 500px;
+  background-color: rgb(255,255,255,.6);
+}
+#new{
+  color: white;
+}
+
+
+body  {
+    background-image: url("https://images.pexels.com/photos/459469/pexels-photo-459469.jpeg?cs=srgb&dl=basil-delicious-food-459469.jpg&fm=jpg");
+    background-color: #cccccc;
+    background-size: 100%;
+}
+</style>
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Mess Manager login</title>
+</head>
+<body>
+  
+
+
+<div class="container">
+    <div class="row">
+        <div class="span12">
+            <div class="" id="loginModal">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <!-- <img src="https://preview.ibb.co/cCegRU/ES_logo.png" alt="ES_logo" border="0"> -->
+                <div id='new'><h1>Mess Management</h1></div>
+              </div>
+              <div class="modal-body">
+                <div class="well">
+                  <ul class="nav nav-tabs">
+                    <li class="active"><a href="#login" data-toggle="tab">Login</a></li>
+                    <li><a href="#create" data-toggle="tab">Create Account</a></li>
+                  </ul>
+                  <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane active in" id="login">
+                      <form class="form-horizontal" action='/login' method="POST">
+                        <fieldset>
+                          <div id="legend">
+                            <center><h3 class="">Login</h3></center>
+                          </div>    
+                          <div class="control-group">
+                            <!-- Username -->
+                            <label class="control-label"  for="username">Username</label>
+                            <div class="controls">
+                              <input type="text" id="username" name="email" placeholder="" class="input-xlarge">
+                            </div>
+                          </div>
+     
+                          <div class="control-group">
+                            <!-- Password-->
+                            <label class="control-label" for="password">Password</label>
+                            <div class="controls">
+                              <input type="password" id="password" name="password" placeholder="" class="input-xlarge">
+                            </div>
+                          </div>
+     
+     
+                          <div class="control-group">
+                            <!-- Button -->
+                            <div class="controls">
+                              <button class="btn btn-success">Login</button>
+                            </div>
+                          </div>
+                        </fieldset>
+                      </form>                
+                    </div>
+                    <div class="tab-pane fade" id="create">
+                      <form id="tab" action="/signup" method="POST">
+                         <label>Name</label>
+                        <input type="text" value="" class="input-xlarge" name="name">
+                        <label>Username</label>
+                        <input type="text" value="" class="input-xlarge" name="email">
+                        <label>Contact Number</label>
+                        <input type="text" value="" class="input-xlarge" name="contact">
+                         <label>College Name</label>
+                        <input type="text" value="" class="input-xlarge" name="collegeName">
+                        <label>password</label>
+                        <input type="password" value="" class="input-xlarge" name="password">
+                        <label>Confirm Password</label>
+                        <input type="password" value="" class="input-xlarge" name="password2">
+     
+                        <div>
+
+                          <button type="submit" class="btn btn-primary">Create Account</button>
+                        </div>
+                      </form>
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+ 
+</body>
+</html> 
+
+
+
+
+

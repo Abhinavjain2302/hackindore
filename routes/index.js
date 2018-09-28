@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mysql=require('mysql');
 var jwt = require('jsonwebtoken');
-const secret = "supersecretkey";
+ var secret="supersecret";
 var bcrypt = require('bcrypt');
 
     //database connectivity
@@ -13,7 +13,9 @@ var connection = mysql.createConnection(dbconfig.connection);
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  console.log("here");
+  //res.render('login');
+  return res.render('login');
 });
 
 
@@ -52,6 +54,7 @@ router.post('/signup',function(req,res,next){
    }
 });
 });
+
 
 
 router.post('/login',function(req,res,next){
@@ -94,10 +97,11 @@ router.post('/login',function(req,res,next){
                 jwt.sign({id: result[0].userId}, secret, function(err, token){
                     if(err)handleError(err, null, res);
                    // return getAllUserDashboardDetails(req, res, result[0].userId, token);
-                   res.json({
-                   	success:true,
-                   	token:token
-                   })
+                   // res.json({
+                   // 	success:true,
+                   // 	token:token
+                   // })
+                   res.render('index');
                     
                 })
 			       
@@ -107,6 +111,137 @@ router.post('/login',function(req,res,next){
 
     });
  })
+
+
+
+router.get('/profile',function(req,res,next){
+
+console.log(req.session.token);
+
+  jwt.verify(req.session.token, secret, function(err, decoded){
+//  jwt.verify(req.headers.authorization, secret, function(err, decoded){
+  if(err){
+      console.log("%%%%%%%%%%%%%%%%%%%" + err);
+      return res.render('login',{success:false,msg:'session expired Login again'});
+    }
+    var userId =  decoded.id;
+    console.log(userId);
+    console.log(decoded);
+
+    //User.findOneById(userId, function(err, user){
+      
+      connection.connect(function(err){
+   
+    console.log("Connected form profile");
+    connection.query("select * from user where userId='"+userId+"'",function(err,results,fields){
+   if(err) throw err;
+
+
+  res.render('user-profile',{user:results});       
+             
+
+    })
+  })
+})
+
+});
+
+
+router.post('/profile',function(req,res,next){
+
+ console.log(req.session.token);
+     jwt.verify(req.session.token, secret, function(err, decoded){
+
+    if(err){
+      console.log("%%%%%%%%%%%%%%%%%%%" + err);
+      return res.render('login',{success:false,msg:'session expired Login again'});
+    }
+    var userId =  decoded.id;
+    var id = userId;
+    var name = req.body.name;
+    var email = req.body.email;
+    var contact = req.body.contact;
+    var collegeName = req.body.collegeName;
+   
+    console.log(req.body.name);
+    console.log(name);
+
+           connection.connect(function(err){
+  
+            console.log("Connected from post profile");
+      
+            var sql="update user SET name='"+name+"', email='"+email+"',contact='"+contact+"',pan='"+pan+"',gstin='"+gstin+"' where userId='"+id+"'";
+           connection.query(sql,function(err,result,fields){
+        
+            if(err)
+            {
+            handleError(err, 'error updating user details', res);
+            return;
+            }
+           
+           res.redirect('../users/profile');
+
+    
+      })
+    })
+    
+  })
+
+})
+
+
+router.post('/changepass',function(req,res,next){
+ var oldpass = req.body.oldpass;
+  var newpass = req.body.newpass;
+  var newpass2 = req.body.newpass2;
+
+console.log(req.session.token);
+  jwt.verify(req.session.token, secret, function(err, decoded){
+  if(err){
+      console.log("%%%%%%%%%%%%%%%%%%%" + err);
+      return res.render('login',{success:false,msg:'session expired Login again'});
+    }
+    var userId = decoded.id;
+
+ 
+    
+    connection.connect(function(err){
+    console.log("Connected from changepass");
+    connection.query("select * from user where userId='"+userId+"'",function(err,result,fields){
+
+
+
+      if(err){
+        handleError(err, '', res);
+        return;
+      }
+      bcrypt.compare(oldpass, result[0].password, function(err, match) {
+        if(!match){
+        
+            return res.render('update-password',{success:false,msg:'old password is not correct'});
+        }
+        if(newpass != newpass2){
+        
+          return res.render('update-password',{success:false,msg:'passwords do not match'});
+        }
+        bcrypt.hash(newpass, 10, function(err, hash){
+          if(err){
+            handleError(err, '', res);
+            return;
+          }
+          result[0].password = hash;
+            connection.query("update user SET password='"+result[0].password+"' where userId='"+userId+"'",function(err,result,fields){
+            if(err) throw err;
+          
+            res.render('update-password',{success:true,msg:'Password Updated successfully'});
+        });
+      });
+    })
+  });
+});
+});
+})
+
 
 
 
