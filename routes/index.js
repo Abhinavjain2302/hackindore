@@ -12,19 +12,20 @@ var connection = mysql.createConnection(dbconfig.connection);
 
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  console.log("here");
-  //res.render('login');
-  return res.render('login');
-});
+// router.get('/', function(req, res, next) {
+//   console.log("here");
+//   //res.render('login');
+//   return res.render('login',{success:null});
+// });
 
 
-router.post('/signup',function(req,res,next){
+router.post('/signup1',function(req,res,next){
    var name=req.body.name;
    var contact=req.body.contact;
    var collegeName=req.body.collegeName;
    var password=req.body.password;
    var email=req.body.email;
+   var userType='student';
    console.log(req.body);
   bcrypt.hash(password, 10, function(err, hash){
         if(err)throw err;
@@ -39,14 +40,57 @@ router.post('/signup',function(req,res,next){
  connection.connect(function(err){
 
    
-   var sql="Insert into user ( name , email , contact ,  password , collegeName) values('"+name+"','"+email+"','"+contact+"','"+password+"','"+collegeName+"')";
+   var sql="Insert into user ( name , email , contact ,  password , collegeName,userType) values('"+name+"','"+email+"','"+contact+"','"+password+"','"+collegeName+"','"+userType+"')";
    connection.query(sql,function(err,result){
       if(err) throw err;
      else{
 
-     	res.json({
-     		msg:"user created"
-     	})
+     	// res.json({
+     	// 	msg:"user created"
+     	// })
+      res.render('login');
+     }
+
+       })
+    });
+   }
+});
+});
+
+
+router.post('/signup2',function(req,res,next){
+  
+   var ownerName=req.body.ownerName;
+   var contact=req.body.contact;
+   var collegeName=req.body.collegeName;
+   var password=req.body.password;
+   var email=req.body.email;
+   var messName=req.body.messName;
+   var userType='student'
+   
+   console.log(req.body);
+  bcrypt.hash(password, 10, function(err, hash){
+        if(err)throw err;
+        password = hash;
+        
+            if(err){
+                return handleError(err, null, res);
+            }
+            else{
+               
+
+ connection.connect(function(err){
+
+   
+   var sql="Insert into admin ( ownerName , email , contact ,  password , collegeName, messName ,userType) values('"+ownerName+"','"+email+"','"+contact+"','"+password+"','"+collegeName+"','"+messName+"','"+userType+"')";
+   connection.query(sql,function(err,result){
+      if(err) throw err;
+     else{
+
+      res.json({
+        success:true,
+        msg:"user created"
+      })
      }
 
        })
@@ -70,6 +114,7 @@ router.post('/login',function(req,res,next){
           
 		    console.log("Connected from login");
 		    //console.log("select * from user where email='"+username+"'");
+
 		    connection.query("select *  from user where email='"+username+"'",function(err,result,fields){
 		     if(err)
 		     {
@@ -83,15 +128,21 @@ router.post('/login',function(req,res,next){
 		     {
                 console.log("user with username : " + username + " not found");
                 msg = "user with this username does not exist";
-                return handleError(null, msg, res);
+               return  res.render('login',{success:false,msg:'There was some error' });
             }
-            
+            else{
+            console.log(result[0].collegeName);
+             connection.query("select *  from admin where collegeName='"+result[0].collegeName+"'",function(err,results,fields){
+                   if(err) throw err;
+              console.log(results);
+                
+
                  bcrypt.compare(password, result[0].password , function(err, isMatch){
 			       if(err){
-                    return handleError(err, null, res);
+                    return  res.render('login',{success:false,msg:'There was some error' });
                 }
                 if(!isMatch){
-                    return handleError(null, "wrong password", res);
+                   return  res.render('login',{success:false,msg:'There was some error' });
                 }
 
                 jwt.sign({id: result[0].userId}, secret, function(err, token){
@@ -101,12 +152,15 @@ router.post('/login',function(req,res,next){
                    // 	success:true,
                    // 	token:token
                    // })
-                   res.render('index');
+                   console.log("inside jwt");
+                
+                  return res.render("index",{result:results});
                     
                 })
 			       
-              });
-
+               });
+             });
+             }
         });
 
     });
@@ -242,6 +296,44 @@ console.log(req.session.token);
 });
 })
 
+
+router.post('/upload',function(req,res,next){
+
+ console.log(req.session.token);
+     jwt.verify(req.session.token, secret, function(err, decoded){
+
+    if(err){
+      console.log("%%%%%%%%%%%%%%%%%%%" + err);
+      return res.render('login',{success:false,msg:'session expired Login again'});
+    }
+    var userId =  decoded.id;
+    var id = userId;
+     var array=req.body.array;
+   
+ console.body(array);
+
+           connection.connect(function(err){
+  
+            console.log("Connected from upload");
+      
+            var sql="update user SET name='"+name+"', email='"+email+"',contact='"+contact+"',pan='"+pan+"',gstin='"+gstin+"' where userId='"+id+"'";
+           connection.query(sql,function(err,result,fields){
+        
+            if(err)
+            {
+            handleError(err, 'error updating user details', res);
+            return;
+            }
+           
+           res.redirect('../users/profile');
+
+    
+      })
+    })
+    
+  })
+
+})
 
 
 

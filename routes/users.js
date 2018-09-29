@@ -54,7 +54,7 @@ router.post('/login',function(req,res,next){
                     return handleError(null, "wrong password", res);
                 }
 
-                jwt.sign({id: result[0].userId}, secret, function(err, token){
+                jwt.sign({id: result[0].adminId}, secret, function(err, token){
                     if(err)handleError(err, null, res);
                    // return getAllUserDashboardDetails(req, res, result[0].userId, token);
                    res.json({
@@ -72,20 +72,14 @@ router.post('/login',function(req,res,next){
  })
 
 
-
-
-
-
-// this api is for sign up for app side
-
-router.post('/signup',function(req,res,next){
+router.post('/signup1',function(req,res,next){
   
-   var ownerName=req.body.ownerName;
+   var name=req.body.name;
    var contact=req.body.mobile;
    var collegeName=req.body.collegeName;
    var password=req.body.password;
    var email=req.body.email;
-   var messName=req.body.messName;
+   var userType='student';
    
    console.log(req.body);
   bcrypt.hash(password, 10, function(err, hash){
@@ -101,7 +95,52 @@ router.post('/signup',function(req,res,next){
  connection.connect(function(err){
 
    
-   var sql="Insert into admin ( ownerName , email , contact ,  password , collegeName, messName ) values('"+ownerName+"','"+email+"','"+contact+"','"+password+"','"+collegeName+"','"+messName+"')";
+  var sql="Insert into user ( name , email , contact ,  password , collegeName,userType) values('"+name+"','"+email+"','"+contact+"','"+password+"','"+collegeName+"','"+userType+"')";
+   connection.query(sql,function(err,result){
+      if(err) throw err;
+     else{
+
+      res.json({
+        success:true,
+        msg:"user created"
+      })
+     }
+
+       })
+    });
+   }
+});
+});
+
+
+
+// this api is for sign up for app side
+
+router.post('/signup2',function(req,res,next){
+  
+   var ownerName=req.body.ownerName;
+   var contact=req.body.mobile;
+   var collegeName=req.body.collegeName;
+   var password=req.body.password;
+   var email=req.body.email;
+   var messName=req.body.messName;
+   var userType='student'
+   
+   console.log(req.body);
+  bcrypt.hash(password, 10, function(err, hash){
+        if(err)throw err;
+        password = hash;
+        
+            if(err){
+                return handleError(err, null, res);
+            }
+            else{
+               
+
+ connection.connect(function(err){
+
+   
+   var sql="Insert into admin ( ownerName , email , contact ,  password , collegeName, messName ,userType) values('"+ownerName+"','"+email+"','"+contact+"','"+password+"','"+collegeName+"','"+messName+"','"+userType+"')";
    connection.query(sql,function(err,result){
       if(err) throw err;
      else{
@@ -116,6 +155,47 @@ router.post('/signup',function(req,res,next){
     });
    }
 });
+});
+
+//api for update daily menu
+router.post('/upload',function(req,res,next){
+  var array=[];
+  var array=req.body.list;
+  console.log(req.headers.authorization);
+jwt.verify(req.headers.authorization, secret, function(err, decoded){
+        if(err){
+            //console.log("%%%%%%%%%%%%%%%%%%%" + err);
+            res.json({
+                msg:"some error occured"
+            })
+            return;
+        }
+        var userId =  decoded.id;
+
+console.log(userId);
+
+console.log(array);
+
+ connection.connect(function(err){
+     
+        console.log("Connected form upload");
+      
+      var sql="Insert into menu ( adminId , item1 , item2 , item3 , item4, item5,item6,item7,item8) values('"+userId+"','"+array[0]+"','"+array[1]+"','"+array[2]+"','"+array[3]+"','"+array[4]+"','"+array[5]+"','"+array[6]+"','"+array[7]+"')";
+          connection.query(sql,function(err,result,fields){
+         if(err) throw err;
+
+                    if(err){
+                        handleError(err, null, res);
+                    }
+                    res.json({
+                        success:true,
+                        msg:"uploaded"
+                    })
+                });
+            });
+
+
+})
 });
 
 

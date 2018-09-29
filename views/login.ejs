@@ -34,7 +34,14 @@ body  {
     <title>Mess Manager login</title>
 </head>
 <body>
-  
+  <center> 
+    <%if(success==false){%>
+        <p><%=msg%></p>
+    <%}%>
+ <%if(success==true){%>
+        <p><%=msg%></p>
+    <%}%>
+    </center>  
 
 
 <div class="container">
