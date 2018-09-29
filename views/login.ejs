@@ -11,15 +11,33 @@
 
 
 <style>
+@import url('https://fonts.googleapis.com/css?family=Righteous');
+
 .well{
   width: 500px;
   background-color: rgb(255,255,255,.6);
 }
 #new{
-  color: white;
+  color: black;
+  font-family: 'Righteous', cursive;
+  font-size: 40px;
+  text-align: center;
+  text-shadow: 1px 1px 5px white;
 }
-
-
+#name , #email , #contact , #college , #password1 , #password2 , #messName , #owner ,#submitButton{
+  display: none;
+}
+#gudda{
+  position: absolute;
+  left:33%;
+  top:60px;
+}
+.modal-body{
+  position: relative;
+  top:210px;
+  left:27%;
+  overflow-y: visible;
+}
 body  {
     background-image: url("https://images.pexels.com/photos/459469/pexels-photo-459469.jpeg?cs=srgb&dl=basil-delicious-food-459469.jpg&fm=jpg");
     background-color: #cccccc;
@@ -34,16 +52,16 @@ body  {
     <title>Mess Manager login</title>
 </head>
 <body>
-  <center> 
+    <center> 
     <%if(success==false){%>
         <p><%=msg%></p>
     <%}%>
  <%if(success==true){%>
         <p><%=msg%></p>
     <%}%>
-    </center>  
-
-
+    </center>
+  
+<img id="gudda" src="https://preview.ibb.co/mjvDu9/chef.png" alt="chef" border="0">
 <div class="container">
     <div class="row">
         <div class="span12">
@@ -53,10 +71,11 @@ body  {
                 <!-- <img src="https://preview.ibb.co/cCegRU/ES_logo.png" alt="ES_logo" border="0"> -->
                 <div id='new'><h1>Mess Management</h1></div>
               </div>
+              <img id="gudda" src="https://preview.ibb.co/mjvDu9/chef.png" alt="chef" border="0">
               <div class="modal-body">
                 <div class="well">
                   <ul class="nav nav-tabs">
-                    <li class="active"><a href="#login" data-toggle="tab">Login</a></li>
+                    <li class="active" class="btn btn-success"><a href="#login" data-toggle="tab">Login</a></li>
                     <li><a href="#create" data-toggle="tab">Create Account</a></li>
                   </ul>
                   <div id="myTabContent" class="tab-content">
@@ -92,24 +111,55 @@ body  {
                         </fieldset>
                       </form>                
                     </div>
-                    <div class="tab-pane fade" id="create">
+                    <div class="tab-pane fade" id="create" style="height: 300px;">
                       <form id="tab" action="/signup" method="POST">
+                        <label>User type</label>
+                        Student:<input type="radio" name="user" id="student">
+                        Mess Incharge:<input type="radio" name="user" id="mess">
+                        <div id="owner">
+                          <label>Owner name</label>
+                        <input type="text" value=""  class="input-xlarge" name="owner">
+                      </div>
+                      <div id="messName">
+                          <label>Mess name</label>
+                        <input type="text" value=""  class="input-xlarge" name="messName">
+                      </div>
+                        <div id="name">
                          <label>Name</label>
-                        <input type="text" value="" class="input-xlarge" name="name">
-                        <label>Username</label>
-                        <input type="text" value="" class="input-xlarge" name="email">
+                        <input type="text" value=""  class="input-xlarge" name="name">
+                      </div>
+                        <div id="email">
+                        <label>User Email</label>
+                        <input type="text" value=""  class="input-xlarge" name="email">
+                      </div>
+                        <div id="contact">
                         <label>Contact Number</label>
                         <input type="text" value="" class="input-xlarge" name="contact">
-                         <label>College Name</label>
-                        <input type="text" value="" class="input-xlarge" name="collegeName">
-                        <label>password</label>
+                      </div>
+                      <div id="college">
+                      <label>College Name</label>
+                        <select type="text" value="" class="input-xlarge" name="collegeName">
+                          <option>IET DAVV</option>
+                          <option>GSITS</option>
+                          <option>Medicaps</option>
+                          <option>Bansal</option>
+                          <option>Truba College</option>
+                          <option>CDGI</option>
+                         </select>
+
+                      </div>
+                      <div id="password1">
+                        <label>Password</label>
                         <input type="password" value="" class="input-xlarge" name="password">
+                      </div>
+                     <div id="password2">
+
                         <label>Confirm Password</label>
-                        <input type="password" value="" class="input-xlarge" name="password2">
-     
+                        <input type="password"  value="" class="input-xlarge" name="password2">
+     </div>
                         <div>
 
-                          <button type="submit" class="btn btn-primary">Create Account</button>
+                          <button id="submitButton" type="submit" class="btn btn-primary">Create Account</button>
                         </div>
                       </form>
                     </div>
@@ -119,8 +169,39 @@ body  {
         </div>
     </div>
 </div>
+
 </div>
- 
+ <script>
+     $('#student').on('click',function(){
+           $('#name').css('display','inline');
+           $('#email').css('display','inline');
+           $('#contact').css('display','inline');
+           $('#college').css('display','inline');
+           $('#password1').css('display','inline');
+           $('#password2').css('display','inline');
+           $('#owner').css('display','none');
+           $('#messName').css('display','none');
+           $('#submitButton').css('display','inline');
+
+     });   
+     $('#mess').on('click',function(){
+           $('#name').css('display','none');
+           $('#email').css('display','inline');
+           $('#contact').css('display','inline');
+           $('#college').css('display','inline');
+           $('#password1').css('display','inline');
+           $('#password2').css('display','inline');
+           $('#owner').css('display','inline');
+           $('#messName').css('display','inline');
+           $('#submitButton').css('display','inline');
+
+     });
+     if($('#password1').val()!=$('#password2').val() || $('#password1').val()!='' || $('#password2').val()!='')
+     {
+        $('#submitButton').disabled=true;
+     }
+
+ </script>
 </body>
 </html> 
 

@@ -36,17 +36,28 @@ app.use(cookieParser());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-app.get('/menu', function(req, res,next){
-  res.render('menu',{submitted:null});
+// app.get('/menu', function(req, res,next){
+//   res.render('menu',{selected:null});
+// })
+
+app.get('/menu_student', function(req, res,next){
+  res.render('menu_student');
+})
+
+app.get('/menu',function(req,res,next){
+  result={
+   " messName":"mess no 1",
+    "ownerName":"abhinav",
+    "collegeName":"IET DAVV"
+  }
+  res.render('index',{result:result});
 })
 
 
-
-
-// app.get('/login', function(req, res){
-//    console.log("here1");
-//   res.render('login.ejs',{success:null});
-// })
+app.get('/up', function(req, res){
+   console.log("here1");
+  res.render('pie');
+})
 
 app.get('/', function(req, res){
 
@@ -57,14 +68,7 @@ app.get('/', function(req, res){
 
 app.get('/logout', function(req, res){
    console.log("logout successfull");
-   req.session.destroy(function(err){
-   console.log("session destroyed");
-    if(err)
-    {
-      console.log("error in destroying session");
-      req.negotiate(err);
-    }
-   })
+  
   res.render('login.ejs',{success:null});
 })
 

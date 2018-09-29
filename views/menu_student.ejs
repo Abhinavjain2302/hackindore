@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="../css/bootstrap.min.css">
         <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="../css/font-awesome.min.css">
-        <!--      
+        <!--        <link rel="stylesheet" href="assets/css/bootstrap-theme.min.css">-->
 
 
         <!--For Plugins external css-->
@@ -27,37 +27,28 @@
         <!--Theme Responsive css-->
         
         <script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
-        <script src="../js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
-        <style type="text/css" media="screen">
-            .card{
-    margin-bottom: 15px;
-    float:left;
-    margin-right:15px;
-        padding:8px;
-        padding-left:20px;
-    position: relative;
-    left:50px;
-            height:200px;
-            width:250px;
-            box-shadow: 2px 2px 5px rgb(120, 96, 96);
-            background-color:rgb(236, 200, 200);
-            border-radius:4px;
-        }
-          #slider{
-            margin-bottom:20px;
-        }
-        button[type="submit"]{
-            position:relative;
-            top:230px;
-            right:0px;
-            color:black;
-            margin-bottom:20px;
-
-        }
+        <script src="assets/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+        <style>
+            table,td,th{
+                border:1px solid;
+            }
+            table{
+                margin-top:50px;
+            }
+            th,td{
+                padding:15px;
+            }
+            #table_container{
+                padding-left:40px;
+                padding-right:40px;
+            }
+            #radio{
+                padding-left:40px;
+                padding-right:40px;
+            }
         </style>
     </head>
     <body>
-
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
@@ -106,8 +97,8 @@
                                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                                     <ul class="nav navbar-nav navbar-right">
-                                        <li><a href="#slider">Menu</a></li>
-                                        <li><a href="#abouts">Notice</a></li>
+                                        <li><a href="#">Menu</a></li>
+                                        <li><a href="C:\Users\HP\Desktop\webcreature\notice\food-andrestorent-one-page-template\index.html">Notice</a></li>
                                         <li><a href="#features">Notification</a></li>
                                         <li><a href="#portfolio">Stats</a></li>
                                         
@@ -127,8 +118,8 @@
                         <div class="main_slider text-center">
                             <div class="col-md-12">
                                 <div class="main_slider_content wow zoomIn" data-wow-duration="1s">
-                                    <h1>Daily Mess Menu</h1>
-                                    <p>Choose whether would you like to eat today in mess or not!!</p>
+                                    <h1>mess</h1>
+                                    <p>Strength is the capacity to break a chocolate bar into four pieces with your bare hands - and then eat just one of the pieces</p>
                                     
                                 </div>
                             </div>	
@@ -137,72 +128,49 @@
                     </div>
                 </div>
             </div>
-       
-
         </section>
-                <form action='/up' method="get">
-
-        <div class="food">
-        <div class="pulse card">
-            <h3>Pulse</h3>
-            <input type="checkbox" name="Moong Dal" value="Moong Dal"> Moong Dal
-            <input type="checkbox" name="Dal Tadka" value="Dal Tadka"> Dal Tadka<br><br>
-            <input type="checkbox" name=" Tuar Dal" value=" Tuar Dal"> Tuar Dal
-            <input type="checkbox" name="Chana Dal" value="Chana Dal"> Chana Dal
-        </div>
-        <div class="pureVeg card">
-                <h3>Pure Veg</h3>
-                <input type="checkbox" name="Rajma" value="Rajma"> Rajma
-                <input type="checkbox" name="Sev Curry" value="Sev Curry"> Sev Curry<br><br>
-                <input type="checkbox" name="Aloo Sabzi" value="Aloo Sabzi"> Aloo Sabzi
-                <input type="checkbox" name="Paneer Gravy" value="Paneer Gravy"> Paneer Gravy
+        <section>
+            <div class="container" id="table_container">
+            <table class="table table-hover">
+                
+                <tr>
+                    <th>Lunch</th>
+                    <th>Dinner</th>
+                    <th>Date</th>
+                </tr>
+                
+                <tr>
+                    <td>Paneer</td>
+                    <td>Kofta</td>
+                    <td>29/09/2018</td>
+                </tr>
+                <tr>
+                        <td>Paneer</td>
+                        <td>Kofta</td>
+                        <td>29/09/2018</td>
+                    </tr>
+                    <tr>
+                            <td>Paneer</td>
+                            <td>Kofta</td>
+                            <td>29/09/2018</td>
+                        </tr>
+                        <tr>
+                                <td>Paneer</td>
+                                <td>Kofta</td>
+                                <td>29/09/2018</td>
+                            </tr>
+            </table>
             </div>
-            <div class="rice card">
-                    <h3>Rice</h3>
-                    <input type="checkbox" name="Veg Biryani" value="Veg Biryani"> Veg Biryani
-                    <input type="checkbox" name="Plain Rice" value="Plain Rice">Plain Rice<br><br>
-                    <input type="checkbox" name="Jeera Rice" value="Jeera Rice"> Jeera Rice
-                    <input type="checkbox" name="Fried Rice" value="Fried Rice"> Fried Rice
-                </div>
-
-                <div class="chapati card">
-                        <h3>Chapati</h3>
-                        <input type="checkbox" name="Plain Roti" value="Plain Roti"> Plain Roti
-                        <input type="checkbox" name="Stuffed Paratha" value="Stuffed Paratha">Stuffed Paratha<br><br>
-                        <input type="checkbox" name="Tandoori Naan" value="Tandoori Naan"> Tandoori Naan
-                        <input type="checkbox" name="Aloo Paratha" value="Aloo Paratha"> Aloo Paratha
-                    </div>
-                    
-            <div class="soups card">
-                    <h3>Soups & Salads</h3>
-                    <input type="checkbox" name="Green Salad" value="Green Salad"> Green Salad
-                    <input type="checkbox" name="Grain Salad" value="Grain Salad">Grain Salad<br><br>
-                    <input type="checkbox" name="Tomato Soup" value="Tomato Soup"> Tomato Soup
-                    <input type="checkbox" name="Soup" value="Soup"> Soup
-                </div>
-                
-            <div class="wafers card">
-                    <h3>Wafers</h3>
-                    <input type="checkbox" name="Masala Papad" value="Masala Papad"> Masala Papad
-                    <input type="checkbox" name="Kurkure" value="Kurkure">Kurkure<br><br>
-                    <input type="checkbox" name="Papad" value="Papad"> Papad
-                    <input type="checkbox" name="Masala Wafers"> Masala Wafers
-                </div>
-                
-            <div class="desert card">
-                    <h3>Desert</h3>
-                    <input type="checkbox" name="Gulab Jamun" value="Gulab Jamun"> Gulab Jamun
-                    <input type="checkbox" name="Moong Halwa" value="Moong Halwa">Moong Halwa<br><br>
-                    <input type="checkbox" name="Ice cream" value="Ice cream"> Ice cream
-                    <input type="checkbox" name=" Sweets" value=" Sweets"> Sweets
-                </div>
-                
-        
-            <button type="submit" class='btn btn-danger' >Upload Menu</button>    
-</div>
-		  </form>
-
-  
+            <div class="container" id="radio">
+            <h3>Are you going to eat food</h3>
+            <form action="/menu" method="get">
+            <input type="radio" name="eat"> yes<br>
+            <input type="radio" name="eat"> No<br>
+            <button type="submit">Submit</button>
+        </form>
+        </div>
+        </section>
+		
 
 
         <script src="../js/vendor/jquery-1.11.2.min.js"></script>
@@ -212,30 +180,6 @@
         <script src="../js/wow/wow.min.js"></script>
         <script src="../js/plugins.js"></script>
         <script src="../js/main.js"></script>
-        <script>
-        
-
-    
-        function giveCheckbox()
-        {
-$('input:checked').each(function() {
-    selected.push($(this).attr('name'));
-    console.log(selected);
-
-
-});}
-            var sr=ScrollReveal();
-            sr.reveal(".slideInLeft",{
-                duration:3000,
-                origin:"left",
-                distance:"250px"
-            })
-            sr.reveal(".slideInRight",{
-                duration:3000,
-                origin:"right",
-                distance:"250px"
-            })
-
-        </script>
+      
     </body>
 </html>

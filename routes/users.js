@@ -17,7 +17,7 @@ router.get('/', function(req, res, next) {
 
 
 
-router.post('/login',function(req,res,next){
+router.post('/login1',function(req,res,next){
 
     var username=req.body.email;
     var password=req.body.password;
@@ -59,7 +59,8 @@ router.post('/login',function(req,res,next){
                    // return getAllUserDashboardDetails(req, res, result[0].userId, token);
                    res.json({
                    	success:true,
-                   	token:token
+                   	token:token,
+                    result:result
                    })
                     
                 })
@@ -70,6 +71,69 @@ router.post('/login',function(req,res,next){
 
     });
  })
+
+
+
+router.post('/login2',function(req,res,next){
+
+    var username=req.body.email;
+    var password=req.body.password;
+
+
+       
+        console.log(username, password);
+       
+           connection.connect(function(err){
+          
+        console.log("Connected from login");
+        //console.log("select * from user where email='"+username+"'");
+        connection.query("select *  from user where email='"+username+"'",function(err,result,fields){
+         if(err)
+         {
+          console.log(err);
+                return handleError(err, null, res);
+             }
+
+               console.log(result);
+
+         if(result.length<=0)
+         {
+                console.log("user with username : " + username + " not found");
+                msg = "user with this username does not exist";
+                return handleError(null, msg, res);
+            }
+            
+                 bcrypt.compare(password, result[0].password , function(err, isMatch){
+             if(err){
+                    return handleError(err, null, res);
+                }
+                if(!isMatch){
+                    return handleError(null, "wrong password", res);
+                }
+
+                jwt.sign({id: result[0].userId}, secret, function(err, token){
+                    if(err)handleError(err, null, res);
+                   // return getAllUserDashboardDetails(req, res, result[0].userId, token);
+                   res.json({
+                    success:true,
+                    token:token
+                   })
+                    
+                })
+             
+              });
+
+        });
+
+    });
+ })
+
+
+
+
+
+
+
 
 
 router.post('/signup1',function(req,res,next){
@@ -197,6 +261,37 @@ console.log(array);
 
 })
 });
+
+
+//api for update daily menu
+router.post('/dataupload',function(req,res,next){
+
+
+var userId=1;
+
+console.log(array);
+
+ connection.connect(function(err){
+     
+        console.log("Connected form upload");
+      
+      var sql="select * from menu where userId='"+userId+"' ";
+          connection.query(sql,function(err,result,fields){
+         if(err) throw err;
+
+                    if(err){
+                        handleError(err, null, res);
+                    }
+                    res.json({
+                        success:true,
+                        result:result
+                    })
+                });
+            });
+
+
+})
+
 
 
 //api for profile
